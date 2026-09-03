@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  email        String    @unique
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  business     Business?
+}
+
+model Business {
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String         @unique @db.ObjectId
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name             String         @default("Untitled studio")
+  logoUrl          String?
+  currency         String         @default("INR")
+  taxLabel         String         @default("GST")
+  taxRate          Float          @default(0)
+  paymentQrUrl     String?
+  payInstructions  String         @default("Scan with your bank or UPI app. Pay the amount on this folio.")
+  defaultDueDays   Int            @default(7)
+  reminderTemplate String         @default("Hello {name}, this is a reminder that {number} for {amount} is still due. Pay here: {link}")
+  quoteSeq         Int            @default(0)
+  invoiceSeq       Int            @default(0)
+  clients          Client[]
+  documents        Document[]
+  notifications    Notification[]
+}
+
+model Client {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  businessId String     @db.ObjectId
+  business   Business   @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  name       String
+  phone      String     @default("")
+  email      String     @default("")
+  notes      String     @default("")
+  createdAt  DateTime   @default(now())
+  documents  Document[]
+}
+
+model Document {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  businessId      String         @db.ObjectId
+  // Cycle Business -> Document -> Client -> Business: NoAction on this path
+  business        Business       @relation(fields: [businessId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  clientId        String         @db.ObjectId
+  client          Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  kind            String
+  status          String
+  number          String
+  publicToken     String         @unique
+  validUntil      DateTime?
+  dueDate         DateTime?
+  discount        Float          @default(0)
+  taxRate         Float          @default(0)
+  notes           String         @default("")
+  convertedFromId String?        @db.ObjectId
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  lineItems       LineItem[]
+  paymentEvents   PaymentEvent[]
+}
+
+model LineItem {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  documentId  String   @db.ObjectId
+  document    Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  description String
+  qty         Float
+  rate        Float
+  sort        Int      @default(0)
+}
+
+model PaymentEvent {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  documentId String   @db.ObjectId
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  type       String
+  reference  String   @default("")
+  createdAt  DateTime @default(now())
+}
+
+model Notification {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  businessId String    @db.ObjectId
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  type       String
+  title      String
+  body       String    @default("")
+  href       String    @default("")
+  documentId String?   @db.ObjectId
+  dedupeKey  String?
+  readAt     DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@unique([businessId, dedupeKey])
+  @@index([businessId, createdAt])
+}
