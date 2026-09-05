@@ -5,19 +5,14 @@ import { mktImg } from "@/lib/marketing-images";
 import { JsonLd } from "@/components/marketing/JsonLd";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Services — quote to invoice, QR pay links, payment confirmation",
   description:
     "Folio services for service businesses: client records, quotes with accept/decline, convert to invoice, QR payment pages, claim-vs-confirm tracking, and WhatsApp reminders—free.",
-  alternates: { canonical: absoluteUrl("/services") },
-  openGraph: {
-    title: "Folio services: the full quote-to-paid path",
-    description:
-      "From client desk to confirmed payment—without a processor middleman or subscription wall.",
-    url: absoluteUrl("/services"),
-  },
-};
+  path: "/services",
+});
 
 const SERVICES = [
   {
@@ -91,6 +86,12 @@ export default function ServicesPage() {
   return (
     <main>
       <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+        ])}
+      />
+      <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "ItemList",
@@ -108,6 +109,7 @@ export default function ServicesPage() {
       <MarketingSection
         variant="image"
         image={mktImg.servicesHero}
+        imageAlt="Folio services: quote to invoice with UPI QR and payment confirmation"
         align="center"
         size="hero"
         scrim="medium"
@@ -127,6 +129,12 @@ export default function ServicesPage() {
         <div className="mkt-cta-row" style={{ justifyContent: "center" }}>
           <Link href="/enter" className="folio-btn-ghost">
             Open your desk
+          </Link>
+          <Link href="/upi-qr-invoice" className="folio-btn-ink">
+            UPI QR invoices
+          </Link>
+          <Link href="/pricing" className="folio-btn-ink">
+            Pricing ₹0
           </Link>
         </div>
       </MarketingSection>

@@ -16,6 +16,7 @@ export default function TermsPage() {
       <MarketingSection
         variant="image"
         image={mktImg.termsHero}
+        imageAlt="Folio terms and conditions"
         align="center"
         size="hero"
         scrim="medium"

@@ -7,8 +7,8 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const LINKS = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ] as const;
@@ -43,7 +43,7 @@ export function SiteHeader() {
             className="font-display flex items-center gap-2 text-lg font-bold text-yellow"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon.png" alt="" className="h-8 w-8 rounded-md" />
+            <img src="/icon.png" alt="Folio" className="h-8 w-8 rounded-md" />
             Folio
           </Link>
         </motion.div>

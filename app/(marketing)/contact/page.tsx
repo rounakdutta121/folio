@@ -5,19 +5,15 @@ import { JsonLd } from "@/components/marketing/JsonLd";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
 import { mktImg } from "@/lib/marketing-images";
+import { pageMetadata } from "@/lib/seo";
 import { absoluteUrl, site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact Folio — product questions, partnerships, support",
   description:
     "Contact the Folio team about quote-to-invoice workflows, QR payment tracking, partnerships, or account help. We reply to real humans.",
-  alternates: { canonical: absoluteUrl("/contact") },
-  openGraph: {
-    title: "Contact Folio",
-    description: "Ask about fit, partnerships, or support for free Folio desks.",
-    url: absoluteUrl("/contact"),
-  },
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
@@ -46,6 +42,7 @@ export default function ContactPage() {
       <MarketingSection
         variant="image"
         image={mktImg.contactHero}
+        imageAlt="Contact Folio about quote-to-invoice workflows and support"
         align="center"
         size="hero"
         scrim="medium"
@@ -138,31 +135,45 @@ export default function ContactPage() {
               t: "Product fit",
               d: "Skim Services for the quote → invoice → QR confirm path.",
               img: mktImg.contactFit,
+              href: "/services",
             },
             {
               n: "02",
               t: "Operations help",
               d: "The blog covers collections tone, UPI confirmation, and free invoicing checklists.",
               img: mktImg.contactOps,
+              href: "/blog",
             },
             {
               n: "03",
-              t: "Account issues",
-              d: "Include the email you signed up with so we can find your desk faster.",
+              t: "Pricing & FAQ",
+              d: "Folio is ₹0 forever. Read pricing and FAQ before you write.",
               img: mktImg.contactAccount,
+              href: "/pricing",
             },
           ].map((item) => (
             <article key={item.t} className="mkt-board__card">
               <div
                 className="mkt-board__media"
                 style={{ backgroundImage: `url(${item.img})` }}
-                aria-hidden
+                role="img"
+                aria-label={item.t}
               />
               <div className="mkt-board__body">
                 <p className="mkt-board__n">{item.n}</p>
-                <h3 className="text-lg font-bold text-white">{item.t}</h3>
+                <h3 className="text-lg font-bold text-white">
+                  <Link href={item.href} className="hover:text-[#5eead4]">
+                    {item.t}
+                  </Link>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#b7cfd8]">
-                  {item.d}
+                  {item.d}{" "}
+                  <Link
+                    href={item.href}
+                    className="font-semibold text-[#5eead4] hover:underline"
+                  >
+                    Open →
+                  </Link>
                 </p>
               </div>
             </article>

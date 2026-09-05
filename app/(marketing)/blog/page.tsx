@@ -6,19 +6,14 @@ import { mktImg } from "@/lib/marketing-images";
 import { JsonLd } from "@/components/marketing/JsonLd";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Blog — invoicing, QR payments, and quote-to-paid operations",
   description:
     "Practical articles on free invoicing, converting quotes to invoices, UPI/QR payment confirmation, WhatsApp reminders, and organic SEO for local service tools.",
-  alternates: { canonical: absoluteUrl("/blog") },
-  openGraph: {
-    title: "Folio Blog",
-    description:
-      "Guides for service businesses on quotes, invoices, and getting paid.",
-    url: absoluteUrl("/blog"),
-  },
-};
+  path: "/blog",
+});
 
 export default function BlogIndexPage() {
   const posts = allPosts();
@@ -27,6 +22,12 @@ export default function BlogIndexPage() {
 
   return (
     <main>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+        ])}
+      />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -47,6 +48,7 @@ export default function BlogIndexPage() {
       <MarketingSection
         variant="image"
         image={mktImg.blogHero}
+        imageAlt="Folio blog on invoicing, UPI QR payments, and collections"
         align="center"
         size="hero"
         scrim="medium"

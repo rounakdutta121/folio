@@ -1,22 +1,25 @@
 import type { MetadataRoute } from "next";
 import { allPosts } from "@/lib/blog";
 import { absoluteUrl } from "@/lib/site";
+import { sitemapPaths } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = [
-    "",
-    "/about",
-    "/services",
-    "/contact",
-    "/blog",
-    "/enter",
-    "/privacy",
-    "/terms",
-  ].map((path) => ({
+  const staticRoutes = sitemapPaths.map((path) => ({
     url: absoluteUrl(path || "/"),
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
-    priority: path === "" ? 1 : path === "/privacy" || path === "/terms" ? 0.4 : 0.8,
+    priority:
+      path === ""
+        ? 1
+        : path === "/privacy" || path === "/terms"
+          ? 0.4
+          : path.startsWith("/for/") ||
+              path.startsWith("/compare/") ||
+              path === "/upi-qr-invoice" ||
+              path === "/pricing" ||
+              path === "/faq"
+            ? 0.85
+            : 0.8,
   }));
 
   const posts = allPosts().map((p) => ({

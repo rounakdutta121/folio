@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { allPosts } from "@/lib/blog";
 import { mktImg } from "@/lib/marketing-images";
-import { absoluteUrl, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import { JsonLd } from "@/components/marketing/JsonLd";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { pageMetadata, softwareApplicationJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: `${site.name} — Free quote to invoice with QR payment confirmation`,
-  description: site.description,
-  alternates: { canonical: absoluteUrl("/") },
-  openGraph: {
-    title: `${site.name} — Quotes and invoices that get paid`,
+  ...pageMetadata({
+    title: `${site.name} — Free quote to invoice with QR payment confirmation`,
     description: site.description,
-    url: absoluteUrl("/"),
+    path: "/",
+  }),
+  title: {
+    absolute: `${site.name} — Free quote to invoice with QR payment confirmation`,
   },
 };
 
@@ -23,26 +24,12 @@ export default function HomePage() {
 
   return (
     <main>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          name: site.name,
-          applicationCategory: "BusinessApplication",
-          operatingSystem: "Web",
-          offers: {
-            "@type": "Offer",
-            price: "0",
-            priceCurrency: "INR",
-          },
-          description: site.description,
-          url: absoluteUrl("/"),
-        }}
-      />
+      <JsonLd data={softwareApplicationJsonLd()} />
 
       <MarketingSection
         variant="image"
         image={mktImg.homeHero}
+        imageAlt="Folio desk workflow: quote, invoice, and UPI QR payment confirmation for Indian service businesses"
         align="left"
         size="hero"
         scrim="medium"
@@ -50,15 +37,15 @@ export default function HomePage() {
         <div className="mkt-hero-grid">
           <div>
             <p className="mkt-hero-kicker">Quote → invoice → confirmed paid</p>
-            <p className="font-display mt-4 text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
+            <h1 className="font-display mt-4 max-w-xl text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
               Folio
-            </p>
-            <h1 className="mt-4 max-w-xl text-xl font-medium leading-snug text-[#e8f4f2] sm:text-2xl">
-              Money documents with a status trail—kept free on purpose.
+              <span className="mt-4 block max-w-xl text-xl font-medium leading-snug tracking-normal text-[#e8f4f2] sm:text-2xl lg:text-[1.65rem]">
+                Free quote-to-invoice software with QR payment confirmation
+              </span>
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed text-[#b7cfd8] sm:text-lg">
               Share a public link with your payment QR. Clients claim they paid.
-              You confirm when money actually arrives.
+              You confirm when money actually arrives—kept free on purpose.
             </p>
             <div className="mkt-cta-row">
               <Link href="/enter" className="folio-btn-ghost">

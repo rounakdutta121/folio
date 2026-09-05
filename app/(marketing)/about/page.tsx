@@ -5,19 +5,14 @@ import { mktImg } from "@/lib/marketing-images";
 import { JsonLd } from "@/components/marketing/JsonLd";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About Folio — free quote-to-invoice software with a clear payment trail",
   description:
     "Why Folio exists: one money document trail from quote to confirmed payment, free for service businesses that collect via QR and UPI—not freemium demos.",
-  alternates: { canonical: absoluteUrl("/about") },
-  openGraph: {
-    title: "About Folio",
-    description:
-      "Harbor-calm money documents, claim-vs-confirm payment tracking, free for every account.",
-    url: absoluteUrl("/about"),
-  },
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
@@ -41,6 +36,7 @@ export default function AboutPage() {
       <MarketingSection
         variant="image"
         image={mktImg.aboutHero}
+        imageAlt="About Folio — free quote-to-invoice desk for Indian service businesses"
         align="center"
         size="hero"
         scrim="medium"
@@ -179,11 +175,14 @@ export default function AboutPage() {
             lead="Fit questions, SEO partnerships, or workflow mapping—we read every message."
           >
             <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
-              <Link href="/contact" className="folio-btn-ghost">
+              <Link href="/services" className="folio-btn-ghost">
+                See the workflow
+              </Link>
+              <Link href="/contact" className="folio-btn-ink">
                 Contact Folio
               </Link>
-              <Link href="/enter" className="folio-btn-ink">
-                Start free instead
+              <Link href="/enter" className="folio-btn-ghost">
+                Start free
               </Link>
             </div>
           </SectionHeading>

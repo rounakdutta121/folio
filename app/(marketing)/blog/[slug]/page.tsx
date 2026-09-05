@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { allPosts, getPost } from "@/lib/blog";
+import {
+  allPosts,
+  getPost,
+  postProductLinks,
+  relatedPosts,
+} from "@/lib/blog";
 import { absoluteUrl, site } from "@/lib/site";
 import { JsonLd } from "@/components/marketing/JsonLd";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { breadcrumbJsonLd, OG_IMAGE, pageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -31,9 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPost(slug);
   if (!post) return { title: "Post not found" };
   return {
-    title: post.title,
-    description: post.description,
-    alternates: { canonical: absoluteUrl(`/blog/${post.slug}`) },
+    ...pageMetadata({
+      title: post.title,
+      description: post.description,
+      path: `/blog/${post.slug}`,
+      image: post.image,
+    }),
     openGraph: {
       type: "article",
       title: post.title,
@@ -41,7 +50,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: absoluteUrl(`/blog/${post.slug}`),
       publishedTime: post.date,
       tags: post.tags,
-      images: [{ url: post.image }],
+      images: [
+        { url: post.image, width: 1200, height: 630, alt: post.title },
+        { ...OG_IMAGE },
+      ],
     },
   };
 }
@@ -51,9 +63,8 @@ export default async function BlogPostPage({ params }: Props) {
   const post = getPost(slug);
   if (!post) notFound();
 
-  const related = allPosts()
-    .filter((p) => p.slug !== post.slug)
-    .slice(0, 3);
+  const related = relatedPosts(post, 3);
+  const productLinks = postProductLinks(post);
 
   const articleBody = post.sections
     .flatMap((s) => [s.title, s.lead, ...s.paragraphs].filter(Boolean))
@@ -62,13 +73,22 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <main>
       <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ])}
+      />
+      <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "BlogPosting",
           headline: post.title,
           datePublished: post.date,
+          dateModified: post.date,
           description: post.description,
           articleBody: articleBody,
+          image: [absoluteUrl(post.image), absoluteUrl(OG_IMAGE.url)],
           author: { "@type": "Organization", name: site.name },
           publisher: {
             "@type": "Organization",
@@ -83,6 +103,7 @@ export default async function BlogPostPage({ params }: Props) {
       <MarketingSection
         variant="image"
         image={post.image}
+        imageAlt={post.title}
         align="center"
         size="hero"
         scrim="medium"
@@ -112,7 +133,7 @@ export default async function BlogPostPage({ params }: Props) {
         <article className="blog-article">
           <div className="blog-cover">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.image} alt="" />
+            <img src={post.image} alt={post.title} />
           </div>
           {post.sections.map((section, i) => (
             <section
@@ -165,6 +186,38 @@ export default async function BlogPostPage({ params }: Props) {
             </section>
           ))}
 
+          <nav className="blog-takeaways" aria-label="Related Folio pages">
+            <p className="blog-takeaways__label">Continue in Folio</p>
+            <ul>
+              {productLinks.map((l) => (
+                <li key={l.href}>
+                  <span className="blog-takeaways__mark" aria-hidden>
+                    →
+                  </span>
+                  <Link href={l.href} className="blog-article__link">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <span className="blog-takeaways__mark" aria-hidden>
+                  →
+                </span>
+                <Link href="/services#convert" className="blog-article__link">
+                  Quote → invoice convert
+                </Link>
+              </li>
+              <li>
+                <span className="blog-takeaways__mark" aria-hidden>
+                  →
+                </span>
+                <Link href="/services#qr" className="blog-article__link">
+                  QR on invoices
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
           <footer className="blog-article__footer">
             <p>
               Ready to try this on a real job?{" "}
@@ -186,7 +239,7 @@ export default async function BlogPostPage({ params }: Props) {
           <SectionHeading
             align="center"
             eyebrow="Keep reading"
-            title="More from the desk."
+            title="Related from the desk."
           />
           <div className="mkt-moves">
             {related.map((r) => (
@@ -194,7 +247,8 @@ export default async function BlogPostPage({ params }: Props) {
                 <div
                   className="mkt-card-media"
                   style={{ backgroundImage: `url(${r.image})` }}
-                  aria-hidden
+                  role="img"
+                  aria-label={r.title}
                 />
                 <div className="mkt-card-body">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[#8eb6c7]">

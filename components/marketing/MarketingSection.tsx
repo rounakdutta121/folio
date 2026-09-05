@@ -11,6 +11,8 @@ type Props = {
   children: ReactNode;
   variant: "image" | "solid";
   image?: string;
+  /** Accessible + crawlable description when variant is image */
+  imageAlt?: string;
   solid?: string;
   align?: Align;
   size?: Size;
@@ -42,6 +44,7 @@ export function MarketingSection({
   children,
   variant,
   image,
+  imageAlt = "",
   solid = "#07131f",
   align = "left",
   size = "content",
@@ -84,13 +87,19 @@ export function MarketingSection({
         <>
           <motion.div
             className="mkt-section__media"
-            style={{ backgroundImage: `url(${image})` }}
-            aria-hidden
             variants={fadeIn}
             initial={reduce ? false : "hidden"}
             whileInView={reduce ? undefined : "show"}
             viewport={{ once: true, amount: 0.1 }}
-          />
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={image}
+              alt={imageAlt}
+              className="mkt-section__media-img"
+              decoding="async"
+            />
+          </motion.div>
           <div
             className="mkt-section__scrim"
             style={{ background: SCRIMS[scrimKey as keyof typeof SCRIMS] }}

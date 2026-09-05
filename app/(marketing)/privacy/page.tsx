@@ -16,6 +16,7 @@ export default function PrivacyPage() {
       <MarketingSection
         variant="image"
         image={mktImg.privacyHero}
+        imageAlt="Folio privacy policy"
         align="center"
         size="hero"
         scrim="medium"

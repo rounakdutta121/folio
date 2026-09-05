@@ -1,6 +1,16 @@
-import { EnterForm } from "@/components/folio/EnterForm";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { EnterForm } from "@/components/folio/EnterForm";
 import { mktImg } from "@/lib/marketing-images";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Create a free Folio desk",
+  description:
+    "Create your free Folio account to send quotes, convert to invoices, share your UPI QR, and confirm client payments. Sign-in for existing desks.",
+  path: "/enter",
+  noIndex: true,
+});
 
 export default async function EnterPage({
   searchParams,

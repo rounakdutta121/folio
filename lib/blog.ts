@@ -1,3 +1,5 @@
+import { extraBlogPosts } from "@/lib/blog-extra";
+
 export type BlogInsight = {
   title: string;
   body: string;
@@ -23,7 +25,7 @@ export type BlogPost = {
   sections: BlogSection[];
 };
 
-export const blogPosts: BlogPost[] = [
+const mainBlogPosts: BlogPost[] = [
   {
     slug: "quote-to-invoice-without-spreadsheets",
     title:
@@ -400,7 +402,7 @@ export const blogPosts: BlogPost[] = [
     title: "Organic SEO for tools that serve local service businesses",
     description:
       "Ranking for invoicing and quoting intent means answering real jobs-to-be-done with durable pages—not stuffing keywords into a thin landing page.",
-    date: "2026-09-10",
+    date: "2026-08-30",
     readingMinutes: 16,
     tags: ["SEO", "content"],
     image: "/blog/seo.jpg",
@@ -488,10 +490,60 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
+export const blogPosts: BlogPost[] = [
+  ...mainBlogPosts,
+  ...(extraBlogPosts as BlogPost[]),
+];
+
 export function getPost(slug: string) {
   return blogPosts.find((p) => p.slug === slug);
 }
 
 export function allPosts() {
   return [...blogPosts].sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+export function relatedPosts(post: BlogPost, limit = 3) {
+  return allPosts()
+    .filter((p) => p.slug !== post.slug)
+    .map((p) => ({
+      post: p,
+      score: p.tags.filter((t) => post.tags.includes(t)).length,
+    }))
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      return a.post.date < b.post.date ? 1 : -1;
+    })
+    .slice(0, limit)
+    .map((x) => x.post);
+}
+
+/** Suggested product deep-links based on post tags */
+export function postProductLinks(post: BlogPost) {
+  const links: { href: string; label: string }[] = [
+    { href: "/services", label: "Services workflow" },
+    { href: "/enter", label: "Open a free desk" },
+  ];
+  if (post.tags.some((t) => /upi|payment/i.test(t))) {
+    links.unshift({ href: "/upi-qr-invoice", label: "UPI QR invoices" });
+  }
+  if (post.tags.some((t) => /whatsapp|collection/i.test(t))) {
+    links.unshift({
+      href: "/blog/invoice-payment-reminder-templates",
+      label: "Reminder templates",
+    });
+  }
+  if (post.tags.some((t) => /freelancer/i.test(t))) {
+    links.unshift({ href: "/for/freelancers", label: "Folio for freelancers" });
+  }
+  if (post.tags.some((t) => /gst|buying/i.test(t))) {
+    links.unshift({ href: "/pricing", label: "Pricing (₹0)" });
+    links.unshift({ href: "/faq", label: "FAQ" });
+  }
+  const seen = new Set<string>();
+  return links.filter((l) => {
+    if (seen.has(l.href)) return false;
+    seen.add(l.href);
+    return true;
+  });
 }

@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Syne } from "next/font/google";
 import "./globals.css";
+import { JsonLd } from "@/components/marketing/JsonLd";
+import {
+  OG_IMAGE,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
 import { absoluteUrl, site } from "@/lib/site";
 
 const outfit = Outfit({
@@ -33,13 +39,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
-    images: [{ url: "/icon.png", width: 512, height: 512, alt: "Folio" }],
+    images: [{ ...OG_IMAGE }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
-    images: ["/icon.png"],
+    images: [OG_IMAGE.url],
   },
   robots: { index: true, follow: true },
 };
@@ -55,10 +61,14 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="en-IN"
       className={`${outfit.variable} ${syne.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-sans">{children}</body>
+      <body className="min-h-full font-sans">
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
+        {children}
+      </body>
     </html>
   );
 }

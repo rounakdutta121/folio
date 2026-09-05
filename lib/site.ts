@@ -15,12 +15,17 @@ export const site = {
   },
   keywords: [
     "free invoice software",
+    "free invoicing software India",
     "quote to invoice",
+    "quotation to invoice",
     "QR payment invoice",
+    "invoice with UPI QR",
     "UPI invoice link",
     "small business invoicing India",
     "client payment confirmation",
     "WhatsApp invoice reminder",
+    "free quote invoice software",
+    "freelancer invoice India",
   ],
 } as const;
 

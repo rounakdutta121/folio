@@ -16,7 +16,7 @@ export function SiteFooter() {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <Stagger className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
+      <Stagger className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-5">
         <StaggerItem>
           <p className="font-display text-xl font-bold text-yellow">{site.name}</p>
           <p className="mt-2 text-sm text-[#8eb6c7]">{site.tagline}</p>
@@ -34,6 +34,21 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link href="/pricing" className="hover:text-white">
+                Pricing (₹0)
+              </Link>
+            </li>
+            <li>
+              <Link href="/upi-qr-invoice" className="hover:text-white">
+                UPI QR invoices
+              </Link>
+            </li>
+            <li>
+              <Link href="/faq" className="hover:text-white">
+                FAQ
+              </Link>
+            </li>
+            <li>
               <Link href="/enter" className="hover:text-white">
                 Open a free desk
               </Link>
@@ -41,6 +56,44 @@ export function SiteFooter() {
             <li>
               <Link href="/blog" className="hover:text-white">
                 Blog
+              </Link>
+            </li>
+          </ul>
+        </StaggerItem>
+        <StaggerItem>
+          <p className="font-bold text-yellow">Solutions</p>
+          <ul className="mt-3 space-y-2 text-sm">
+            <li>
+              <Link href="/for/freelancers" className="hover:text-white">
+                Freelancers
+              </Link>
+            </li>
+            <li>
+              <Link href="/for/clinics" className="hover:text-white">
+                Clinics &amp; studios
+              </Link>
+            </li>
+            <li>
+              <Link href="/for/contractors" className="hover:text-white">
+                Contractors &amp; agencies
+              </Link>
+            </li>
+            <li>
+              <Link href="/compare/excel" className="hover:text-white">
+                vs Excel / WhatsApp
+              </Link>
+            </li>
+            <li>
+              <Link href="/compare/zoho-invoice" className="hover:text-white">
+                vs Zoho Invoice
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/customers/service-desk-story"
+                className="hover:text-white"
+              >
+                Customer story
               </Link>
             </li>
           </ul>
