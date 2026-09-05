@@ -1,5 +1,6 @@
 import { EnterForm } from "@/components/folio/EnterForm";
 import Link from "next/link";
+import { mktImg } from "@/lib/marketing-images";
 
 export default async function EnterPage({
   searchParams,
@@ -10,9 +11,16 @@ export default async function EnterPage({
   const signIn = mode === "in";
 
   return (
-    <main className="folio-app-shell flex min-h-screen items-center justify-center px-3 py-8 sm:px-4 sm:py-12">
+    <main
+      className="folio-app-shell flex min-h-screen items-center justify-center px-3 py-8 sm:px-4 sm:py-12"
+      style={{
+        backgroundImage: `linear-gradient(160deg, rgba(7,19,31,0.55), rgba(10,28,43,0.7)), url(${mktImg.enterBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="w-full max-w-md folio-panel p-5 sm:p-8">
-        <Link href="/" className="text-lg font-semibold text-ink">
+        <Link href="/" className="font-display text-lg font-bold text-ink">
           Folio
         </Link>
         <p className="mt-1 text-sm text-muted">Free forever — no plans</p>

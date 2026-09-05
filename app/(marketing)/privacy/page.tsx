@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { mktImg } from "@/lib/marketing-images";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -15,23 +16,23 @@ export default function PrivacyPage() {
     <main>
       <MarketingSection
         variant="image"
-        image="/marketing/dusk.jpg"
+        image={mktImg.privacyHero}
         align="center"
         size="hero"
-        scrim="heavy"
+        scrim="medium"
       >
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-yellow">
+        <p className="mkt-hero-kicker" style={{ justifyContent: "center" }}>
           Legal
         </p>
-        <h1 className="mx-auto mt-3 max-w-3xl text-4xl font-black text-yellow sm:text-5xl">
+        <h1 className="font-display mx-auto mt-4 max-w-3xl text-4xl font-extrabold text-white sm:text-5xl">
           Privacy policy
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-[#fdba74]">
+        <p className="mx-auto mt-4 text-[#b7cfd8]">
           Last updated: 3 September 2026 · {site.location}
         </p>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#2a1540" size="content">
+      <MarketingSection variant="solid" solid="#07131f" size="content">
         <SectionHeading
           eyebrow="Overview"
           title="We collect only what Folio needs to run your desk."
@@ -57,7 +58,7 @@ export default function PrivacyPage() {
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#3b0764" size="content">
+      <MarketingSection variant="solid" solid="#0c2233" size="content">
         <SectionHeading
           eyebrow="Data we collect"
           title="Account, business, and document data."
@@ -83,13 +84,13 @@ export default function PrivacyPage() {
           ].map((i) => (
             <li key={i.t}>
               <h3 className="text-lg font-bold text-yellow">{i.t}</h3>
-              <p className="mt-2 text-sm text-[#fdba74]">{i.d}</p>
+              <p className="mt-2 text-sm text-[#8eb6c7]">{i.d}</p>
             </li>
           ))}
         </ul>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#1a0a2e" size="content">
+      <MarketingSection variant="solid" solid="#0a1c2b" size="content">
         <SectionHeading
           eyebrow="How we use data"
           title="To provide Folio—not to sell your client list."
@@ -104,13 +105,13 @@ export default function PrivacyPage() {
             <li>Improve reliability, prevent abuse, and respond to support</li>
           </ul>
         </div>
-        <p className="mt-6 text-[#fff8e7]">
+        <p className="mt-6 text-[#e8f4f2]">
           We do not sell personal data. Public links only expose the document
           you chose to share with a client.
         </p>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#4c1d95" size="content">
+      <MarketingSection variant="solid" solid="#0f766e" size="content">
         <SectionHeading
           eyebrow="Sharing & retention"
           title="Processors, retention, and your rights."
@@ -130,21 +131,24 @@ export default function PrivacyPage() {
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#2a1540" align="center" size="band">
-        <SectionHeading
-          eyebrow="Contact"
-          title="Privacy requests"
-          lead={`${site.email} · ${site.phoneDisplay} · ${site.location}`}
-        >
-          <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
-            <Link href="/contact" className="folio-btn-ghost">
-              Contact form
-            </Link>
-            <Link href="/terms" className="folio-btn-ink">
-              Terms &amp; conditions
-            </Link>
-          </div>
-        </SectionHeading>
+      <MarketingSection variant="solid" solid="#0f766e" align="center" size="band">
+        <div className="mkt-cta-band">
+          <SectionHeading
+            align="center"
+            eyebrow="Contact"
+            title="Privacy requests"
+            lead={`${site.email} · ${site.phoneDisplay} · ${site.location}`}
+          >
+            <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
+              <Link href="/contact" className="folio-btn-ghost">
+                Contact form
+              </Link>
+              <Link href="/terms" className="folio-btn-ink">
+                Terms &amp; conditions
+              </Link>
+            </div>
+          </SectionHeading>
+        </div>
       </MarketingSection>
     </main>
   );

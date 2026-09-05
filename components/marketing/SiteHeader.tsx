@@ -40,7 +40,7 @@ export function SiteHeader() {
         <motion.div whileHover={reduce ? undefined : { scale: 1.03 }}>
           <Link
             href="/"
-            className="flex items-center gap-2 text-lg font-semibold text-yellow"
+            className="font-display flex items-center gap-2 text-lg font-bold text-yellow"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icon.png" alt="" className="h-8 w-8 rounded-md" />
@@ -95,7 +95,7 @@ export function SiteHeader() {
 
       {open ? (
         <motion.div
-          className="border-t-2 border-yellow bg-[#3b0764] px-3 py-4 md:hidden"
+          className="border-t-2 border-yellow bg-[#0c2233] px-3 py-4 md:hidden"
           initial={reduce ? false : { height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           transition={{ duration: 0.25 }}
@@ -115,7 +115,7 @@ export function SiteHeader() {
             <li>
               <Link
                 href="/enter"
-                className="mt-2 block rounded-lg bg-yellow px-3 py-3 text-center text-base font-bold text-[#1a0b12]"
+                className="mt-2 block rounded-lg bg-yellow px-3 py-3 text-center text-base font-bold text-[#07131f]"
                 onClick={() => setOpen(false)}
               >
                 Start free

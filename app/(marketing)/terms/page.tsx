@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { mktImg } from "@/lib/marketing-images";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -15,23 +16,23 @@ export default function TermsPage() {
     <main>
       <MarketingSection
         variant="image"
-        image="/marketing/seal.jpg"
+        image={mktImg.termsHero}
         align="center"
         size="hero"
-        scrim="heavy"
+        scrim="medium"
       >
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-yellow">
+        <p className="mkt-hero-kicker" style={{ justifyContent: "center" }}>
           Legal
         </p>
-        <h1 className="mx-auto mt-3 max-w-3xl text-4xl font-black text-yellow sm:text-5xl">
+        <h1 className="font-display mx-auto mt-4 max-w-3xl text-4xl font-extrabold text-white sm:text-5xl">
           Terms &amp; conditions
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-[#fdba74]">
+        <p className="mx-auto mt-4 text-[#b7cfd8]">
           Last updated: 3 September 2026 · {site.location}
         </p>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#2a1540" size="content">
+      <MarketingSection variant="solid" solid="#07131f" size="content">
         <SectionHeading
           eyebrow="Agreement"
           title="By using Folio, you agree to these terms."
@@ -58,7 +59,7 @@ export default function TermsPage() {
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#3b0764" size="content">
+      <MarketingSection variant="solid" solid="#0c2233" size="content">
         <SectionHeading
           eyebrow="Accounts"
           title="You are responsible for your desk."
@@ -84,13 +85,13 @@ export default function TermsPage() {
           ].map((i) => (
             <li key={i.t}>
               <h3 className="text-lg font-bold text-yellow">{i.t}</h3>
-              <p className="mt-2 text-sm text-[#fdba74]">{i.d}</p>
+              <p className="mt-2 text-sm text-[#8eb6c7]">{i.d}</p>
             </li>
           ))}
         </ul>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#1a0a2e" size="content">
+      <MarketingSection variant="solid" solid="#0a1c2b" size="content">
         <SectionHeading
           eyebrow="Payments"
           title="Folio does not process your client payments."
@@ -109,7 +110,7 @@ export default function TermsPage() {
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#4c1d95" size="content">
+      <MarketingSection variant="solid" solid="#0f766e" size="content">
         <SectionHeading
           eyebrow="Service terms"
           title="Availability, IP, and liability."
@@ -126,33 +127,36 @@ export default function TermsPage() {
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#2a1540" size="content">
+      <MarketingSection variant="solid" solid="#07131f" size="content">
         <SectionHeading
           eyebrow="Governing law"
           title="India · Chandigarh contact."
         />
-        <p className="text-center text-[#fdba74]">
+        <p className="max-w-2xl text-left text-[#8eb6c7]">
           These terms are governed by the laws of India. For notices, use{" "}
           {site.email}. We may update these terms; continued use after changes
           means you accept the updated version.
         </p>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#3b0764" align="center" size="band">
-        <SectionHeading
-          eyebrow="Also see"
-          title="Privacy policy"
-          lead="How we handle personal data related to your Folio account."
-        >
-          <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
-            <Link href="/privacy" className="folio-btn-ghost">
-              Privacy policy
-            </Link>
-            <Link href="/contact" className="folio-btn-ink">
-              Contact
-            </Link>
-          </div>
-        </SectionHeading>
+      <MarketingSection variant="solid" solid="#0f766e" align="center" size="band">
+        <div className="mkt-cta-band">
+          <SectionHeading
+            align="center"
+            eyebrow="Also see"
+            title="Privacy policy"
+            lead="How we handle personal data related to your Folio account."
+          >
+            <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
+              <Link href="/privacy" className="folio-btn-ghost">
+                Privacy policy
+              </Link>
+              <Link href="/contact" className="folio-btn-ink">
+                Contact
+              </Link>
+            </div>
+          </SectionHeading>
+        </div>
       </MarketingSection>
     </main>
   );

@@ -9,14 +9,18 @@ import { SectionHeading } from "@/components/marketing/SectionHeading";
 
 type Props = { params: Promise<{ slug: string }> };
 
-const SECTION_SOLIDS = ["#2a1540", "#3b0764", "#1a0a2e", "#4c1d95"] as const;
-const SECTION_IMAGES = [
-  "/marketing/trail.jpg",
-  "/marketing/qr.jpg",
-  "/marketing/seal.jpg",
-  "/marketing/workshop.jpg",
-  "/marketing/dusk.jpg",
-] as const;
+function TitleLines({ title }: { title: string }) {
+  const words = title.split(" ");
+  if (words.length < 8) return <>{title}</>;
+  const mid = Math.ceil(words.length * 0.55);
+  return (
+    <>
+      {words.slice(0, mid).join(" ")}{" "}
+      <br className="hidden sm:block" />
+      {words.slice(mid).join(" ")}
+    </>
+  );
+}
 
 export async function generateStaticParams() {
   return allPosts().map((p) => ({ slug: p.slug }));
@@ -37,6 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: absoluteUrl(`/blog/${post.slug}`),
       publishedTime: post.date,
       tags: post.tags,
+      images: [{ url: post.image }],
     },
   };
 }
@@ -48,7 +53,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const related = allPosts()
     .filter((p) => p.slug !== post.slug)
-    .slice(0, 4);
+    .slice(0, 3);
 
   const articleBody = post.sections
     .flatMap((s) => [s.title, s.lead, ...s.paragraphs].filter(Boolean))
@@ -77,116 +82,141 @@ export default async function BlogPostPage({ params }: Props) {
 
       <MarketingSection
         variant="image"
-        image="/marketing/desk.jpg"
+        image={post.image}
         align="center"
         size="hero"
-        scrim="heavy"
+        scrim="medium"
       >
         <Link
           href="/blog"
-          className="text-sm font-semibold text-[#fdba74] hover:text-yellow"
+          className="text-sm font-semibold text-[#b7cfd8] hover:text-[#5eead4]"
         >
           ← Folio blog
         </Link>
-        <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-[#fdba74]">
+        <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-[#5eead4]">
           <time dateTime={post.date}>{post.date}</time>
           {" · "}
-          {post.readingMinutes} min read · {post.tags.join(" · ")}
+          {post.readingMinutes} min read
+          {" · "}
+          {post.tags.join(" · ")}
         </p>
-        <h1 className="mx-auto mt-3 max-w-4xl text-3xl font-black leading-tight text-yellow sm:text-5xl">
-          {post.title}
+        <h1 className="font-display mx-auto mt-4 max-w-4xl text-3xl font-extrabold leading-[1.15] tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
+          <TitleLines title={post.title} />
         </h1>
-        <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-[#fdba74] sm:text-lg">
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[#b7cfd8] sm:text-lg">
           {post.description}
         </p>
       </MarketingSection>
 
-      {post.sections.map((section, i) => {
-        const useImage = i % 3 === 1;
-        return (
-          <MarketingSection
-            key={`${section.eyebrow}-${i}`}
-            variant={useImage ? "image" : "solid"}
-            image={SECTION_IMAGES[i % SECTION_IMAGES.length]}
-            solid={SECTION_SOLIDS[i % SECTION_SOLIDS.length]}
-            size="content"
-            scrim="medium"
-          >
-            <SectionHeading
-              eyebrow={section.eyebrow}
-              title={section.title}
-              lead={section.lead}
-            />
+      <section className="blog-shell">
+        <article className="blog-article">
+          <div className="blog-cover">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={post.image} alt="" />
+          </div>
+          {post.sections.map((section, i) => (
+            <section
+              key={`${section.eyebrow}-${i}`}
+              className="blog-article__block"
+              id={`section-${i + 1}`}
+            >
+              <p className="blog-article__eyebrow">{section.eyebrow}</p>
+              <h2 className="blog-article__h2">{section.title}</h2>
+              {section.lead ? (
+                <p className="blog-article__lead">{section.lead}</p>
+              ) : null}
 
-            <div className="mkt-blog-copy">
-              {section.paragraphs.map((para, j) => (
-                <p key={j}>{para}</p>
-              ))}
-            </div>
-
-            {section.insights && section.insights.length > 0 ? (
-              <div className="mkt-steps-row mt-8">
-                {section.insights.map((insight) => (
-                  <div key={insight.title + insight.body} className="mkt-step-tile">
-                    <h3 className="text-lg font-bold text-yellow">
-                      {insight.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[#fdba74] sm:text-base">
-                      {insight.body}
-                    </p>
-                  </div>
+              <div className="blog-article__body">
+                {section.paragraphs.map((para, j) => (
+                  <p key={j}>{para}</p>
                 ))}
               </div>
-            ) : null}
 
-            {section.takeaways && section.takeaways.length > 0 ? (
-              <div className="mkt-blog-takeaways">
-                <p className="mkt-blog-takeaways__label">Key takeaways</p>
-                <ul>
-                  {section.takeaways.map((item) => (
-                    <li key={item}>{item}</li>
+              {section.insights && section.insights.length > 0 ? (
+                <div className="blog-callouts" role="list">
+                  {section.insights.map((insight) => (
+                    <aside
+                      key={insight.title + insight.body}
+                      className="blog-callout"
+                      role="listitem"
+                    >
+                      <p className="blog-callout__title">{insight.title}</p>
+                      <p className="blog-callout__body">{insight.body}</p>
+                    </aside>
                   ))}
-                </ul>
-              </div>
-            ) : null}
-          </MarketingSection>
-        );
-      })}
+                </div>
+              ) : null}
 
-      <MarketingSection variant="solid" solid="#3b0764" align="center" size="band">
-        <SectionHeading
-          eyebrow="Try Folio"
-          title="Put this into practice."
-          lead="Open a free desk and send one quote today."
-        >
-          <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
-            <Link href="/enter" className="folio-btn-ghost">
-              Start free
-            </Link>
-            <Link href="/services" className="folio-btn-ink">
-              See the workflow
-            </Link>
-          </div>
-        </SectionHeading>
-      </MarketingSection>
-
-      <MarketingSection variant="solid" solid="#1a0a2e" size="content">
-        <SectionHeading eyebrow="Keep reading" title="More from the desk." />
-        <ul className="mkt-principle-grid">
-          {related.map((r) => (
-            <li key={r.slug}>
-              <h3 className="text-lg font-bold text-yellow">
-                <Link href={`/blog/${r.slug}`} className="hover:text-white">
-                  {r.title}
-                </Link>
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-[#fdba74]">
-                {r.description}
-              </p>
-            </li>
+              {section.takeaways && section.takeaways.length > 0 ? (
+                <div className="blog-takeaways">
+                  <p className="blog-takeaways__label">Key takeaways</p>
+                  <ul>
+                    {section.takeaways.map((item) => (
+                      <li key={item}>
+                        <span className="blog-takeaways__mark" aria-hidden>
+                          →
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </section>
           ))}
-        </ul>
-      </MarketingSection>
+
+          <footer className="blog-article__footer">
+            <p>
+              Ready to try this on a real job?{" "}
+              <Link href="/enter" className="blog-article__link">
+                Open a free Folio desk
+              </Link>{" "}
+              or{" "}
+              <Link href="/services" className="blog-article__link">
+                see the full workflow
+              </Link>
+              .
+            </p>
+          </footer>
+        </article>
+      </section>
+
+      {related.length > 0 ? (
+        <MarketingSection variant="solid" solid="#0a1c2b" size="content">
+          <SectionHeading
+            align="center"
+            eyebrow="Keep reading"
+            title="More from the desk."
+          />
+          <div className="mkt-moves">
+            {related.map((r) => (
+              <article key={r.slug} className="mkt-moves__item">
+                <div
+                  className="mkt-card-media"
+                  style={{ backgroundImage: `url(${r.image})` }}
+                  aria-hidden
+                />
+                <div className="mkt-card-body">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#8eb6c7]">
+                    {r.date} · {r.readingMinutes} min
+                  </p>
+                  <h3 className="mt-2 text-lg font-bold text-white">
+                    <Link
+                      href={`/blog/${r.slug}`}
+                      className="hover:text-[#5eead4]"
+                    >
+                      {r.title}
+                    </Link>
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[#b7cfd8]">
+                    {r.description}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </MarketingSection>
+      ) : null}
     </main>
   );
 }

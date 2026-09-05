@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { allPosts } from "@/lib/blog";
+import { mktImg } from "@/lib/marketing-images";
 import { absoluteUrl, site } from "@/lib/site";
 import { JsonLd } from "@/components/marketing/JsonLd";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
@@ -41,207 +42,322 @@ export default function HomePage() {
 
       <MarketingSection
         variant="image"
-        image="/marketing/desk.jpg"
-        align="center"
+        image={mktImg.homeHero}
+        align="left"
         size="hero"
-        scrim="heavy"
+        scrim="medium"
       >
-        <p className="text-5xl font-black tracking-tight text-yellow sm:text-7xl lg:text-8xl">
-          Folio
-        </p>
-        <h1 className="mx-auto mt-5 max-w-3xl text-2xl font-semibold leading-snug text-[#fff8e7] sm:text-4xl">
-          Money documents with a status trail—from quote to confirmed paid.
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#fdba74] sm:text-lg">
-          Free quote-to-invoice software for service businesses. Share a public
-          link with your payment QR. Clients claim they paid. You confirm when
-          money actually arrives.
-        </p>
-        <div className="mkt-cta-row">
-          <Link href="/enter" className="folio-btn-ghost">
-            Open a free desk
-          </Link>
-          <Link href="/services" className="folio-btn-ink">
-            See how Folio works
-          </Link>
+        <div className="mkt-hero-grid">
+          <div>
+            <p className="mkt-hero-kicker">Quote → invoice → confirmed paid</p>
+            <p className="font-display mt-4 text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl">
+              Folio
+            </p>
+            <h1 className="mt-4 max-w-xl text-xl font-medium leading-snug text-[#e8f4f2] sm:text-2xl">
+              Money documents with a status trail—kept free on purpose.
+            </h1>
+            <p className="mt-4 max-w-md text-base leading-relaxed text-[#b7cfd8] sm:text-lg">
+              Share a public link with your payment QR. Clients claim they paid.
+              You confirm when money actually arrives.
+            </p>
+            <div className="mkt-cta-row">
+              <Link href="/enter" className="folio-btn-ghost">
+                Open a free desk
+              </Link>
+              <Link href="/services" className="folio-btn-ink">
+                See the path
+              </Link>
+            </div>
+          </div>
+          <aside className="mkt-hero-panel" aria-label="Payment status preview">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#5eead4]">
+              Live trail
+            </p>
+            <div className="mkt-hero-panel__row">
+              <span className="mkt-hero-panel__dot" />
+              <div>
+                <p className="font-semibold text-white">Due</p>
+                <p className="mt-0.5 text-sm text-[#b7cfd8]">
+                  Invoice shared with your QR
+                </p>
+              </div>
+            </div>
+            <div className="mkt-hero-panel__row">
+              <span className="mkt-hero-panel__dot mkt-hero-panel__dot--warn" />
+              <div>
+                <p className="font-semibold text-white">Claimed</p>
+                <p className="mt-0.5 text-sm text-[#b7cfd8]">
+                  Client taps “I’ve paid”
+                </p>
+              </div>
+            </div>
+            <div className="mkt-hero-panel__row">
+              <span className="mkt-hero-panel__dot mkt-hero-panel__dot--ok" />
+              <div>
+                <p className="font-semibold text-white">Confirmed</p>
+                <p className="mt-0.5 text-sm text-[#b7cfd8]">
+                  You mark money received
+                </p>
+              </div>
+            </div>
+          </aside>
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#2a1540" size="content">
+      <MarketingSection variant="solid" solid="#07131f" size="content">
         <SectionHeading
-          eyebrow="The broken trail"
-          title="The money story breaks before the payment does."
-          lead="When quote, invoice, and proof live in three places, collections turn into guesswork."
+          align="center"
+          eyebrow="The break"
+          title="The money story fails before the payment does."
+          lead="When quote, invoice, and proof live in three chats, collections become guesswork."
         />
-        <div className="mkt-steps-row">
+        <div className="mkt-board">
           {[
             {
               n: "01",
               t: "Quote in chat",
               d: "A price is agreed in messages. Totals change. Nobody owns the latest version.",
+              img: mktImg.homeBreak1,
             },
             {
               n: "02",
               t: "Invoice elsewhere",
               d: "Someone retypes lines into a sheet. Margin and tax quietly drift.",
+              img: mktImg.homeBreak2,
             },
             {
               n: "03",
               t: "Pay by screenshot",
               d: "A UPI photo lands in chat. Month-end becomes archaeology.",
+              img: mktImg.homeBreak3,
             },
           ].map((item) => (
-            <div key={item.t} className="mkt-step-tile">
-              <span className="mkt-step-tile__n">{item.n}</span>
-              <h3 className="text-lg font-bold text-[#fff8e7]">{item.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-[#fdba74]">
-                {item.d}
-              </p>
-            </div>
+            <article key={item.t} className="mkt-board__card">
+              <div
+                className="mkt-board__media"
+                style={{ backgroundImage: `url(${item.img})` }}
+                aria-hidden
+              />
+              <div className="mkt-board__body">
+                <p className="mkt-board__n">{item.n}</p>
+                <h3 className="text-lg font-bold text-white">{item.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#b7cfd8]">
+                  {item.d}
+                </p>
+              </div>
+            </article>
           ))}
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#3b0764" size="content">
+      <MarketingSection variant="solid" solid="#0a1c2b" size="content">
         <SectionHeading
+          align="center"
           eyebrow="Unique positioning"
           title="Claim paid is not the same as money received."
-          lead="Your QR already moves money. Folio gives you the operational memory around it—so you stop chasing screenshots and start confirming what the bank shows."
+          lead="Your QR already moves money. Folio keeps the operational memory around it."
         />
-        <div className="mkt-status-flow">
+        <div className="mkt-track">
           {[
             { t: "Due", d: "Invoice shared with your QR" },
             { t: "Claimed", d: "Client taps “I’ve paid”" },
             { t: "Confirmed", d: "You mark money received" },
           ].map((s) => (
-            <div key={s.t} className="mkt-status-flow__item">
-              <p className="font-bold text-yellow">{s.t}</p>
-              <p className="mt-1 text-sm text-[#fff8e7]">{s.d}</p>
+            <div key={s.t} className="mkt-track__step">
+              <p className="mkt-track__label">{s.t}</p>
+              <p className="text-base font-semibold text-white">{s.d}</p>
             </div>
           ))}
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#1a0a2e" size="content">
+      <MarketingSection variant="solid" solid="#07131f" size="content">
         <SectionHeading
-          eyebrow="How Folio works"
+          align="center"
+          eyebrow="How it works"
           title="One document trail. Three clear moves."
         />
-        <div className="mkt-steps-row">
+        <div className="mkt-moves">
           {[
             {
               n: "01",
               t: "One folio, two moments",
               d: "Write the quote once. Convert accepted lines into an invoice—no retyping.",
+              img: mktImg.homeMove1,
             },
             {
               n: "02",
               t: "Public page, your QR",
               d: "Clients open a clean link on their phone. Your payment QR sits on the invoice.",
+              img: mktImg.homeMove2,
             },
             {
               n: "03",
               t: "Confirm what your bank shows",
-              d: "They tap “I’ve paid.” Your board lights yellow until you mark money received.",
+              d: "They tap “I’ve paid.” Your board waits until you mark money received.",
+              img: mktImg.homeMove3,
             },
           ].map((step) => (
-            <div key={step.n} className="mkt-step-tile">
-              <span className="mkt-step-tile__n">{step.n}</span>
-              <h3 className="text-xl font-bold text-[#fff8e7]">{step.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-[#fdba74] sm:text-base">
-                {step.d}
-              </p>
-            </div>
+            <article key={step.n} className="mkt-moves__item">
+              <div
+                className="mkt-card-media"
+                style={{ backgroundImage: `url(${step.img})` }}
+                aria-hidden
+              />
+              <div className="mkt-card-body">
+                <span className="mkt-moves__n">{step.n}</span>
+                <h3 className="font-display text-xl font-bold text-white">
+                  {step.t}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#b7cfd8] sm:text-base">
+                  {step.d}
+                </p>
+              </div>
+            </article>
           ))}
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#2a1540" size="content">
-        <SectionHeading
-          eyebrow="Who it’s for"
-          title="Service owners who collect through UPI, QR, and transfer."
-        />
-        <div className="mkt-split-panel">
-          <div
-            className="mkt-split-panel__visual"
-            style={{ backgroundImage: "url(/marketing/workshop.jpg)" }}
-            aria-hidden
-          />
-          <div className="mkt-split-panel__body">
-            <ul className="space-y-3 text-[#fff8e7]">
+      <MarketingSection variant="solid" solid="#0c2233" size="content">
+        <div className="mkt-audience">
+          <div className="mkt-audience__body">
+            <SectionHeading
+              eyebrow="Who it’s for"
+              title="Service owners who collect through UPI, QR, and transfer."
+            />
+            <ul className="mt-1 space-y-3.5">
               {[
                 "Clinics and practitioners issuing estimates then final bills",
                 "Studios, tutors, and agencies with project quotes",
                 "Contractors and crews who close work on WhatsApp",
                 "Owners tired of freemium tools locking reminders behind a plan",
               ].map((line) => (
-                <li key={line} className="flex gap-3 text-sm sm:text-base">
-                  <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-yellow" />
+                <li key={line} className="mkt-check">
+                  <span className="mkt-check__mark" aria-hidden>
+                    ✓
+                  </span>
                   <span>{line}</span>
                 </li>
               ))}
             </ul>
           </div>
+          <div
+            className="mkt-audience__visual"
+            style={{ backgroundImage: `url(${mktImg.homeAudience})` }}
+            aria-hidden
+          />
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#4c1d95" align="center" size="band">
-        <SectionHeading
-          eyebrow="Free forever"
-          title="Free for every account—on purpose."
-          lead="Auth keeps documents private. It is not a meter for features. Quotes, invoices, QR links, reminders, and confirmation stay open on the money path."
-        >
-          <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
-            <Link href="/about" className="folio-btn-ghost">
-              Read our stance
-            </Link>
-          </div>
-        </SectionHeading>
-      </MarketingSection>
-
-      <MarketingSection variant="solid" solid="#1a0a2e" size="content">
-        <SectionHeading eyebrow="Blog" title="From the Folio desk">
-          <div className="mt-3">
-            <Link
-              href="/blog"
-              className="text-sm font-semibold text-yellow hover:underline"
-            >
-              All articles →
-            </Link>
-          </div>
-        </SectionHeading>
-        <ul className="mkt-post-list mx-auto max-w-3xl text-left">
-          {posts.map((post) => (
-            <li key={post.slug}>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#fdba74]">
-                {post.date} · {post.readingMinutes} min
-              </p>
-              <Link
-                href={`/blog/${post.slug}`}
-                className="mt-1 block text-lg font-bold text-yellow hover:text-white sm:text-xl"
-              >
-                {post.title}
+      <MarketingSection
+        variant="image"
+        image={mktImg.homeFree}
+        align="center"
+        size="band"
+        scrim="light"
+      >
+        <div className="mkt-glass mkt-glass--center mkt-glass--wide">
+          <SectionHeading
+            align="center"
+            eyebrow="Free forever"
+            title="Free for every account—on purpose."
+            lead="Auth keeps documents private. It is not a meter for features."
+          >
+            <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
+              <Link href="/about" className="folio-btn-ghost">
+                Read our stance
               </Link>
-              <p className="mt-1 text-sm text-[#fdba74] sm:text-base">
-                {post.description}
-              </p>
-            </li>
-          ))}
-        </ul>
+            </div>
+          </SectionHeading>
+        </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#3b0764" align="center" size="band">
-        <SectionHeading
-          eyebrow="Get started"
-          title="Start with one client and one quote."
-          lead="Open a desk in under a minute. No card. No trial countdown."
-        >
-          <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
-            <Link href="/enter" className="folio-btn-ghost">
-              Create your free Folio account
-            </Link>
+      <MarketingSection variant="solid" solid="#07131f" size="content">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
+          <SectionHeading
+            align="left"
+            eyebrow="Desk notes"
+            title="From the Folio blog"
+          />
+          <Link
+            href="/blog"
+            className="mb-2 text-sm font-semibold text-[#5eead4] hover:text-white"
+          >
+            All articles →
+          </Link>
+        </div>
+        <div className="mkt-magazine">
+          {posts[0] ? (
+            <article
+              className="mkt-magazine__feature"
+              style={{
+                backgroundImage: `linear-gradient(160deg, rgba(7,19,31,0.78), rgba(15,118,110,0.45)), url(${posts[0].image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#b7cfd8]">
+                {posts[0].date} · {posts[0].readingMinutes} min
+              </p>
+              <h3 className="font-display mt-2 text-2xl font-bold text-white">
+                <Link
+                  href={`/blog/${posts[0].slug}`}
+                  className="hover:text-[#5eead4]"
+                >
+                  {posts[0].title}
+                </Link>
+              </h3>
+              <p className="mt-2 text-sm text-[#d1e8e4]">
+                {posts[0].description}
+              </p>
+            </article>
+          ) : null}
+          <div className="mkt-magazine__stack">
+            {posts.slice(1).map((post) => (
+              <article key={post.slug} className="mkt-moves__item">
+                <div
+                  className="mkt-card-media"
+                  style={{
+                    backgroundImage: `url(${post.image})`,
+                    height: "6.5rem",
+                  }}
+                  aria-hidden
+                />
+                <div className="mkt-card-body" style={{ padding: "1rem 1.1rem 1.15rem" }}>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[#8eb6c7]">
+                    {post.date} · {post.readingMinutes} min
+                  </p>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="mt-1 block text-lg font-bold text-white hover:text-[#5eead4]"
+                  >
+                    {post.title}
+                  </Link>
+                  <p className="mt-1 text-sm text-[#b7cfd8] line-clamp-2">
+                    {post.description}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
-        </SectionHeading>
+        </div>
+      </MarketingSection>
+
+      <MarketingSection variant="solid" solid="#0f766e" align="center" size="band">
+        <div className="mkt-cta-band">
+          <SectionHeading
+            align="center"
+            eyebrow="Get started"
+            title="Start with one client and one quote."
+            lead="Open a desk in under a minute. No card. No trial countdown."
+          >
+            <div className="mkt-cta-row" style={{ marginTop: "1.25rem" }}>
+              <Link href="/enter" className="folio-btn-ghost">
+                Create your free Folio account
+              </Link>
+            </div>
+          </SectionHeading>
+        </div>
       </MarketingSection>
     </main>
   );

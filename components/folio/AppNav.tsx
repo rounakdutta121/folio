@@ -79,13 +79,13 @@ export function AppNav({ studio }: { studio: string }) {
       </div>
 
       {open ? (
-        <div className="border-t-2 border-yellow bg-[#3b0764] px-3 py-4 md:hidden">
+        <div className="border-t-2 border-yellow bg-[#0c2233] px-3 py-4 md:hidden">
           <ul className="space-y-1">
             {LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="block rounded-lg px-3 py-3 text-base font-semibold text-yellow hover:bg-purple-900 hover:text-white"
+                  className="block rounded-lg px-3 py-3 text-base font-semibold text-yellow hover:bg-teal-950 hover:text-white"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
@@ -96,7 +96,7 @@ export function AppNav({ studio }: { studio: string }) {
               <form action={signOut}>
                 <button
                   type="submit"
-                  className="w-full rounded-lg px-3 py-3 text-left text-base font-semibold text-yellow hover:bg-purple-900 hover:text-white"
+                  className="w-full rounded-lg px-3 py-3 text-left text-base font-semibold text-yellow hover:bg-teal-950 hover:text-white"
                 >
                   Sign out
                 </button>

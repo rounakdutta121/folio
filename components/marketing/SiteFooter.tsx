@@ -10,7 +10,7 @@ export function SiteFooter() {
 
   return (
     <motion.footer
-      className="border-t-4 border-yellow bg-[#1a0a2e] text-[#fde68a]"
+      className="border-t border-yellow/40 bg-[#07131f] text-[#b7e4dc]"
       initial={reduce ? false : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -18,9 +18,9 @@ export function SiteFooter() {
     >
       <Stagger className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <StaggerItem>
-          <p className="text-xl font-bold text-yellow">{site.name}</p>
-          <p className="mt-2 text-sm text-[#fdba74]">{site.tagline}</p>
-          <p className="mt-4 text-sm text-[#fdba74]">
+          <p className="font-display text-xl font-bold text-yellow">{site.name}</p>
+          <p className="mt-2 text-sm text-[#8eb6c7]">{site.tagline}</p>
+          <p className="mt-4 text-sm text-[#8eb6c7]">
             Free quote-to-invoice software with QR payment confirmation for
             service businesses.
           </p>
@@ -72,7 +72,7 @@ export function SiteFooter() {
         </StaggerItem>
         <StaggerItem>
           <p className="font-bold text-yellow">Contact</p>
-          <ul className="mt-3 space-y-2 text-sm text-[#fdba74]">
+          <ul className="mt-3 space-y-2 text-sm text-[#8eb6c7]">
             <li>
               <a href={`mailto:${site.email}`} className="hover:text-white">
                 {site.email}
@@ -87,7 +87,7 @@ export function SiteFooter() {
           </ul>
         </StaggerItem>
       </Stagger>
-      <div className="border-t border-yellow/40 px-4 py-4 text-center text-xs text-[#fdba74]">
+      <div className="border-t border-yellow/40 px-4 py-4 text-center text-xs text-[#8eb6c7]">
         <p>
           © {new Date().getFullYear()} {site.name}. Free for every account.
         </p>

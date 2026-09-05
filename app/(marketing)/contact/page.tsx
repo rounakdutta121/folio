@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/marketing/ContactForm";
 import { JsonLd } from "@/components/marketing/JsonLd";
 import { MarketingSection } from "@/components/marketing/MarketingSection";
 import { SectionHeading } from "@/components/marketing/SectionHeading";
+import { mktImg } from "@/lib/marketing-images";
 import { absoluteUrl, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -44,22 +45,23 @@ export default function ContactPage() {
 
       <MarketingSection
         variant="image"
-        image="/marketing/dusk.jpg"
+        image={mktImg.contactHero}
         align="center"
         size="hero"
-        scrim="heavy"
+        scrim="medium"
       >
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-yellow">
+        <p className="mkt-hero-kicker" style={{ justifyContent: "center" }}>
           Contact
         </p>
-        <h1 className="mx-auto mt-3 max-w-3xl text-3xl font-black text-yellow sm:text-5xl">
-          Tell us what is stuck in your money trail.
+        <h1 className="font-display mx-auto mt-5 max-w-4xl text-3xl font-extrabold leading-[1.15] text-white sm:text-5xl">
+          Tell us what is stuck
+          <br className="hidden sm:block" /> in your money trail.
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#fdba74] sm:text-lg">
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[#b7cfd8] sm:text-lg">
           Product fit, partnerships, press, or support. Prefer to try first?{" "}
           <Link
             href="/enter"
-            className="text-yellow underline-offset-4 hover:underline"
+            className="text-[#5eead4] underline-offset-4 hover:underline"
           >
             Open a free desk
           </Link>
@@ -67,68 +69,55 @@ export default function ContactPage() {
         </p>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#2a1540" size="content">
+      <MarketingSection variant="solid" solid="#07131f" size="content">
         <SectionHeading
+          align="center"
           eyebrow="Reach us"
           title="Write like a human. We’ll reply like one."
           lead="Use the form or email directly—whichever is faster for you."
         />
-        <div className="mkt-pair">
-          <div className="mkt-pair__cell" style={{ background: "#3b0764" }}>
-            <h3 className="text-xl font-bold text-yellow sm:text-2xl">
+        <div className="mkt-dock">
+          <aside className="mkt-dock__aside">
+            <h3 className="font-display text-xl font-bold text-white sm:text-2xl">
               Direct channels
             </h3>
-            <dl className="mt-5 space-y-5 text-[#fdba74]">
+            <dl className="mt-5 space-y-5 text-[#b7cfd8]">
               <div>
-                <dt className="text-sm font-bold uppercase tracking-wider text-yellow">
+                <dt className="text-sm font-bold uppercase tracking-wider text-[#5eead4]">
                   Email
                 </dt>
-                <dd className="mt-1 text-lg text-[#fff8e7]">
+                <dd className="mt-1 text-lg text-white">
                   <a href={`mailto:${site.email}`} className="hover:underline">
                     {site.email}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-bold uppercase tracking-wider text-yellow">
+                <dt className="text-sm font-bold uppercase tracking-wider text-[#5eead4]">
                   Phone
                 </dt>
-                <dd className="mt-1 text-lg text-[#fff8e7]">
+                <dd className="mt-1 text-lg text-white">
                   <a href={`tel:${site.phone}`} className="hover:underline">
                     {site.phoneDisplay}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-bold uppercase tracking-wider text-yellow">
+                <dt className="text-sm font-bold uppercase tracking-wider text-[#5eead4]">
                   Location
                 </dt>
-                <dd className="mt-1 text-lg text-[#fff8e7]">{site.location}</dd>
+                <dd className="mt-1 text-lg text-white">{site.location}</dd>
               </div>
               <div>
-                <dt className="text-sm font-bold uppercase tracking-wider text-yellow">
+                <dt className="text-sm font-bold uppercase tracking-wider text-[#5eead4]">
                   Typical reply
                 </dt>
                 <dd className="mt-1">Within a few business days.</dd>
               </div>
             </dl>
-            <ul className="mt-6 space-y-2 text-sm text-[#fdba74]">
-              <li>
-                · Browse{" "}
-                <Link href="/services" className="text-yellow hover:underline">
-                  services
-                </Link>
-              </li>
-              <li>
-                · Read the{" "}
-                <Link href="/blog" className="text-yellow hover:underline">
-                  blog
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="mkt-pair__cell" style={{ background: "#1a0a2e" }}>
-            <h3 className="text-xl font-bold text-yellow sm:text-2xl">
+          </aside>
+          <div className="mkt-dock__form">
+            <h3 className="font-display text-xl font-bold text-white sm:text-2xl">
               Send a message
             </h3>
             <ContactForm />
@@ -136,36 +125,47 @@ export default function ContactPage() {
         </div>
       </MarketingSection>
 
-      <MarketingSection variant="solid" solid="#3b0764" size="content">
+      <MarketingSection variant="solid" solid="#0a1c2b" size="content">
         <SectionHeading
+          align="center"
           eyebrow="Before you write"
           title="A few shortcuts that save time."
         />
-        <div className="mkt-steps-row">
+        <div className="mkt-board">
           {[
             {
               n: "01",
               t: "Product fit",
               d: "Skim Services for the quote → invoice → QR confirm path.",
+              img: mktImg.contactFit,
             },
             {
               n: "02",
               t: "Operations help",
               d: "The blog covers collections tone, UPI confirmation, and free invoicing checklists.",
+              img: mktImg.contactOps,
             },
             {
               n: "03",
               t: "Account issues",
               d: "Include the email you signed up with so we can find your desk faster.",
+              img: mktImg.contactAccount,
             },
           ].map((item) => (
-            <div key={item.t} className="mkt-step-tile">
-              <span className="mkt-step-tile__n">{item.n}</span>
-              <h3 className="text-lg font-bold text-[#fff8e7]">{item.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-[#fdba74]">
-                {item.d}
-              </p>
-            </div>
+            <article key={item.t} className="mkt-board__card">
+              <div
+                className="mkt-board__media"
+                style={{ backgroundImage: `url(${item.img})` }}
+                aria-hidden
+              />
+              <div className="mkt-board__body">
+                <p className="mkt-board__n">{item.n}</p>
+                <h3 className="text-lg font-bold text-white">{item.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#b7cfd8]">
+                  {item.d}
+                </p>
+              </div>
+            </article>
           ))}
         </div>
       </MarketingSection>

@@ -19,6 +19,7 @@ export type BlogPost = {
   date: string;
   readingMinutes: number;
   tags: string[];
+  image: string;
   sections: BlogSection[];
 };
 
@@ -32,6 +33,7 @@ export const blogPosts: BlogPost[] = [
     date: "2026-08-12",
     readingMinutes: 14,
     tags: ["invoicing", "operations"],
+    image: "/blog/spreadsheet.jpg",
     sections: [
       {
         eyebrow: "The real problem",
@@ -131,6 +133,7 @@ export const blogPosts: BlogPost[] = [
     date: "2026-08-20",
     readingMinutes: 13,
     tags: ["payments", "UPI"],
+    image: "/blog/qr-pay.jpg",
     sections: [
       {
         eyebrow: "Context",
@@ -218,6 +221,7 @@ export const blogPosts: BlogPost[] = [
     date: "2026-09-01",
     readingMinutes: 15,
     tags: ["buying guide", "SaaS"],
+    image: "/blog/free.jpg",
     sections: [
       {
         eyebrow: "Buying filter",
@@ -311,6 +315,7 @@ export const blogPosts: BlogPost[] = [
     date: "2026-09-05",
     readingMinutes: 12,
     tags: ["collections", "WhatsApp"],
+    image: "/blog/whatsapp.jpg",
     sections: [
       {
         eyebrow: "Tone",
@@ -398,6 +403,7 @@ export const blogPosts: BlogPost[] = [
     date: "2026-09-10",
     readingMinutes: 16,
     tags: ["SEO", "content"],
+    image: "/blog/seo.jpg",
     sections: [
       {
         eyebrow: "Intent",
